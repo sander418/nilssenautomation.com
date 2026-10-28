@@ -1,0 +1,299 @@
+/* Nilssen Automation: one stylesheet for every page. No external requests. */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #f7f9f8;
+  --text: #1c2623;
+  --muted: #4a5753;
+  --accent: #1e5c47;
+  --on-accent: #ffffff;
+  --rule: #c9d3cf;
+  --focus: #1c2623;
+
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-head: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, "Bitstream Charter", Georgia, serif;
+
+  --measure: 38rem;
+  --page: 64rem;
+  --gutter: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151b19;
+    --text: #e4eae7;
+    --muted: #a9b5b0;
+    --accent: #86cdb0;
+    --on-accent: #10221b;
+    --rule: #34413c;
+    --focus: #e4eae7;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+/* Skip link: hidden until focused */
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.wrap {
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Header */
+.site-header {
+  padding-block: 1.5rem;
+}
+
+.site-name {
+  font-family: var(--font-head);
+  font-size: 1.125rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-name:hover {
+  text-decoration: underline;
+}
+
+/* Headings */
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+h1 {
+  font-size: clamp(2.125rem, 1.4rem + 3.4vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  max-width: 17ch;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1rem;
+  max-width: var(--measure);
+}
+
+.price {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hero */
+.hero {
+  padding-block: 3.5rem 4.5rem;
+}
+
+.hero .lede {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  max-width: 34rem;
+  margin-bottom: 2rem;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  max-width: 30rem;
+  margin-top: 1rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.8rem 1.4rem;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.button:hover {
+  text-decoration: underline;
+}
+
+/* Sections: ledger layout, heading in a narrow left column on wide screens */
+.section {
+  border-top: 1px solid var(--rule);
+  padding-block: 3rem;
+}
+
+@media (min-width: 56rem) {
+  .section {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr);
+    column-gap: 3rem;
+    padding-block: 4rem;
+  }
+
+  .section > h2 {
+    grid-column: 1;
+  }
+
+  .section > .body {
+    grid-column: 2;
+  }
+}
+
+.body > :last-child {
+  margin-bottom: 0;
+}
+
+/* The pilot checklist, drawn as an empty request checklist */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin-block: 1.5rem;
+}
+
+.checklist li {
+  position: relative;
+  padding: 0.65rem 0 0.65rem 2.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.checklist li:first-child {
+  border-top: 1px solid var(--rule);
+}
+
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 0.95rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 2px solid var(--accent);
+  border-radius: 2px;
+}
+
+/* Numbered steps: a real sequence */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+}
+
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 2.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -0.2rem;
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--accent);
+}
+
+.steps strong {
+  font-weight: 600;
+}
+
+/* Contact */
+.contact .button {
+  margin-top: 0.5rem;
+}
+
+/* Long-form pages (privacy, 404) */
+.page {
+  padding-block: 2.5rem 4rem;
+}
+
+.page h2 {
+  margin-top: 2.5rem;
+}
+
+.page ul {
+  padding-left: 1.25rem;
+}
+
+.page li {
+  margin-bottom: 0.4rem;
+}
+
+.updated {
+  color: var(--muted);
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding-block: 2rem 3rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.site-footer p {
+  margin-bottom: 0.4rem;
+}
