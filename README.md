@@ -1,6 +1,6 @@
 # nilssenautomation.com
 
-Static site for Nilssen Automation: plain HTML and one CSS file. No build step, JavaScript or third-party requests. Scrolling uses the browser's native behavior.
+Static site for Nilssen Automation: plain HTML/CSS with optional, self-hosted Lenis smooth scrolling. No build step or third-party requests. Content and links work without JavaScript.
 
 Files:
 
@@ -8,6 +8,9 @@ Files:
 - `privacy/index.html`: the privacy notice, served at `/privacy/`
 - `404.html`: shown by GitHub Pages for any missing path
 - `style.css`: the site stylesheet
+- `assets/smooth-scroll.js`: wheel and section-link scrolling; native touch and reduced-motion fallbacks
+- `assets/vendor/lenis-1.3.27/`: pinned Lenis browser files and MIT license
+- `assets/vendor/transitions-dev/LICENSE.txt`: license for the button-chevron transition
 - `robots.txt`: allows all crawlers
 - `CNAME`: the custom domain, `nilssenautomation.com`
 
@@ -19,7 +22,7 @@ The live website uses GitHub Pages, repository `sander418/nilssenautomation.com`
 
 1. Review the local site and its privacy page before publishing.
 2. Copy the reviewed contents of this folder to the existing repository root. Keep `CNAME` and `robots.txt`. Do not upload the parent project or its research files.
-3. Review the repository diff, then commit and push the intended files yourself. Remove obsolete assets only if they are present in that checkout. The current site needs no `assets/` directory.
+3. Review the repository diff, then commit and push the intended files yourself. Remove obsolete assets only if they are present in that checkout. Keep the current `assets/` directory with the HTML files; the scrolling enhancement loads from it.
 4. Wait for GitHub Pages to finish deploying. Open `https://nilssenautomation.com/`, `https://nilssenautomation.com/privacy/` and a missing address to check the home page, privacy notice and 404.
 
 Updating these static files requires no DNS, email or GitHub Pages settings changes.
@@ -106,3 +109,21 @@ All pages use native scrolling. No animation library or initializer is required.
 The home and privacy pages load `style.css` using relative paths. The 404 uses `/style.css` so it also works at nested missing addresses. Keep those paths when editing.
 
 Preserve the privacy wording, canonical and Open Graph tags, and the Org.nr. TODO comments. Add a registration number only after registration. Keep visible keyboard focus and check light and dark modes at 375px after changes.
+
+## Motion and navigation
+
+The local revision prepared on 30 October 2026 adds Pilot, Process and Contact
+links, a back-to-top link, clearer pilot-term grouping, and restrained button
+feedback. Lenis 1.3.27 smooths wheel and section-link scrolling; touch stays
+native. Reduced-motion preferences disable smoothing, including when changed
+while the page is open. Skip links stay instant and move keyboard focus.
+All content stays visible without JavaScript or if Lenis fails to load.
+
+The Lenis files are self-hosted and pinned. The tarball was checked against
+npm SHA-512 integrity metadata. No CDN, API key, tracking, cookies, external
+fonts or paid service is used. Retain the vendor licenses when publishing.
+
+To remove smoothing, remove both script tags and the Lenis stylesheet link
+from index.html, privacy/index.html and 404.html. The navigation links still
+work through the browser's native fragment behavior. Updates should review
+one specific version and replace its assets and references together.
