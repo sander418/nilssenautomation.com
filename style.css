@@ -10,6 +10,14 @@
   --on-accent: #ffffff;
   --rule: #c9d3cf;
   --focus: #1c2623;
+  --surface: #edf2ef;
+  --selection: #d9e9e0;
+  --feedback-duration: 150ms;
+  --learn-shift: 2px;
+  --learn-spread: 8deg;
+  --learn-in: 150ms;
+  --learn-out: 150ms;
+  --learn-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-head: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, "Bitstream Charter", Georgia, serif;
@@ -28,6 +36,8 @@
     --on-accent: #10221b;
     --rule: #34413c;
     --focus: #e4eae7;
+    --surface: #202b26;
+    --selection: #365b49;
   }
 }
 
@@ -40,6 +50,16 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--text);
+}
+
+[id] {
+  scroll-margin-top: 2rem;
 }
 
 body {
@@ -112,6 +132,40 @@ a:hover {
   text-decoration: underline;
 }
 
+.home .site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: 1.5rem;
+  row-gap: 0.25rem;
+}
+
+.on-page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.on-page-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.5rem 0.625rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  text-decoration-color: transparent;
+  transition: color var(--feedback-duration) ease-out,
+    text-decoration-color var(--feedback-duration) ease-out;
+}
+
+.on-page-nav a:hover,
+.on-page-nav a:focus-visible {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
 /* Headings */
 h1,
 h2,
@@ -144,6 +198,10 @@ ol,
 dl {
   margin: 0 0 1rem;
   max-width: var(--measure);
+}
+
+p {
+  text-wrap: pretty;
 }
 
 .price {
@@ -223,25 +281,62 @@ dl {
 }
 
 .button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
   min-height: 44px;
+  max-width: 100%;
   padding: 0.8rem 1.4rem;
   background: var(--accent);
   color: var(--on-accent);
   font-weight: 600;
   text-decoration: none;
-  border-radius: 3px;
+  border-radius: 6px;
+  transition: background-color var(--feedback-duration) ease-out,
+    color var(--feedback-duration) ease-out,
+    scale var(--feedback-duration) ease-out;
 }
 
 .button:hover {
+  background: var(--text);
+  color: var(--bg);
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
 
+.t-learn-chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  transform: translateX(0);
+  transition: transform var(--learn-out) var(--learn-ease);
+}
+.t-learn-arm {
+  transform-box: view-box;
+  transform-origin: 10px 8px;
+  vector-effect: non-scaling-stroke;
+  transition: transform var(--learn-out) var(--learn-ease);
+}
+.t-learn:hover .t-learn-chevron { transform: translateX(var(--learn-shift)); transition-duration: var(--learn-in); }
+.t-learn:hover .t-learn-arm { transition-duration: var(--learn-in); }
+.t-learn:hover .t-learn-arm-top { transform: rotate(var(--learn-spread)); }
+.t-learn:hover .t-learn-arm-bot { transform: rotate(calc(var(--learn-spread) * -1)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .t-learn-chevron, .t-learn-arm { transition: none !important; }
+  .t-learn:hover .t-learn-chevron,
+  .t-learn:hover .t-learn-arm { transform: none; }
+}
+
 .button:active {
+  scale: 0.96;
   background: var(--text);
   color: var(--bg);
   text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button:active { scale: none; }
 }
 
 /* Sections stay in the document's reading order at every width. */
@@ -261,10 +356,21 @@ dl {
 /* Terms are readable text; only the process below is numbered. */
 .terms {
   margin-block: 0 1rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border-radius: 12px;
 }
 
 .terms > div {
   margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.terms > div:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
 .terms dt {
@@ -305,6 +411,11 @@ dl {
 
 .steps strong {
   font-weight: 600;
+}
+
+.steps li::marker,
+.deliverables li::marker {
+  color: var(--accent);
 }
 
 /* Contact */
