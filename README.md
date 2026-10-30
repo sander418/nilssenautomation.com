@@ -104,7 +104,7 @@ GitHub's documentation for these records:
 
 ## Scrolling and maintenance
 
-All pages use native scrolling. No animation library or initializer is required. Skip links move directly to the main content.
+All pages load the self-hosted Lenis library and initializer for optional smooth scrolling. Touch and reduced-motion users retain native scrolling; every page also works without JavaScript. Skip links move directly to the main content.
 
 The home and privacy pages load `style.css` using relative paths. The 404 uses `/style.css` so it also works at nested missing addresses. Keep those paths when editing.
 
