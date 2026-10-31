@@ -78,7 +78,7 @@ The repository root must contain `index.html`, `CNAME` and the other files direc
 
 ## DNS reference
 
-**Since 30 Oct 2026 the domain's DNS is managed in Cloudflare** (dash.cloudflare.com, account sander@nilssenautomation.com, zone `nilssenautomation.com`, DNS > Records), not in Shopify. All four A and AAAA records below are in place, set to "DNS only" (grey cloud), and HTTPS is enforced. GitHub Pages needs only these records:
+**Since 30 Oct 2026 the domain's DNS is managed in Cloudflare** (dash.cloudflare.com, zone `nilssenautomation.com`, DNS > Records), not in Shopify. All four A and AAAA records below are in place, set to "DNS only" (grey cloud), and HTTPS is enforced. GitHub Pages needs only these records:
 
 | Type | Name | Value |
 |---|---|---|
